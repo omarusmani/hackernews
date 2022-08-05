@@ -21,7 +21,10 @@ function App() {
     console.log(articles);
   }, [articles]);
 
-
+  function getDate(timestamp){
+   var date = new Date(timestamp * 1000);
+   return date.toLocaleDateString("en-US")
+  }
   return (
 
     <div className="App">
@@ -33,7 +36,7 @@ function App() {
             <h4>{article.url}</h4>
             <h5>{article.points}</h5>
             <h3>{article.author}</h3>
-            <h4></h4>
+            <h4>{getDate(article.created_at_i)}</h4>
         </li>
         ))}
       </ul>
