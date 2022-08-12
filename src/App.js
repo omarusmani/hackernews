@@ -6,15 +6,16 @@ import React, { useEffect, useState } from "react";
 function App() {
   const [articles, setArticles] = useState([]);
 
-  async function getArticles(props) {
-    const response = await fetch(`http://hn.algolia.com/api/v1/search?tags=${props}`);
+  async function getArticles(tag,query,bydate,page,hits) {
+    // console.log(`http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}&hitsPerPage=${hits}&page=${page}`)
+    const response = await fetch(`http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}&hitsPerPage=${hits}&page=${page}`);
     const data = await response.json();
     setArticles(data.hits);
   }
 
   useEffect(() => {
     console.log("Mounted");
-    getArticles();
+    getArticles("","","","","");//fixed error where no queries where causing issues with api rejection//this also brings the initial page 
   }, []);
 
   useEffect(() => {
@@ -28,6 +29,12 @@ function App() {
   //  return date.toLocaleDateString("en-US")
   return formattedDate;
   }
+  function getUrl(props){
+    // console.log(props.url==null)
+    //  console.log( props._url === null ? `https://news.ycombinator.com/item?id=${props.objectID}` : `${props.url}`)
+     return (props.url === null ? `https://news.ycombinator.com/item?id=${props.objectID}` :props.url)
+
+  }
 
 
   return (
@@ -38,7 +45,11 @@ function App() {
         <a href="https://news.ycombinator.com/"className="favicon">H</a>
         Search<br></br>
         Hacker News</h1>
-        <button onClick={getArticles("")}>Hello</button>
+        <button onClick={()=>getArticles("","","","","")}>Hello</button>
+        <button onClick={()=>getArticles("comment","","","","")}>Hello</button>
+        <button onClick={()=>getArticles("ask_hn","","","","")}>Hello</button>
+        <button onClick={()=>getArticles("front_page","","","","")}>Hello</button>
+
         <form>
         <div>Search</div>
     <select>
@@ -53,7 +64,7 @@ function App() {
     </select>
         <div>for</div>
       <select>
-      <option value='blue'>All time</option>
+      <option onClick={()=>getArticles("","yellow","","","")} value='blue'>All time</option>
       <option value='green'>Last 24h</option>
       <option value='red'>Past Week</option>
       <option value='yellow'>Past Month</option>
@@ -65,12 +76,20 @@ function App() {
       <ul>
        {articles.map((article, index)=>(
         <li className="posts" key={article.objectID}>
-            <a href={article.url}>{article.title}</a>
-            <div></div>
-            <h4 className="url">(${article.url})</h4>
-            <h5>{article.points}</h5>
-            <h3>{article.author}</h3>
-            <h4>{getDate(article.created_at_i)}</h4>
+            <h2><a href={`https://news.ycombinator.com/item?id=${article.objectID}`}>{article.title}</a></h2>
+            {/* {/* <span>{index}</span> */}
+            <a href={article.url} className="url">{getUrl(article)}</a> {/*add href fot article link on hackernews */}
+            <span className='bottom'>
+            <br></br>
+            <a href={`https://news.ycombinator.com/item?id=${article.objectID}`}>{article.points}</a>
+            <div>|</div>
+            <div>{article.author}</div>
+            <div>|</div>
+            <a href={`https://news.ycombinator.com/item?id=${article.objectID}`}>{getDate(article.created_at_i)}</a>
+            <div>|</div>
+            <a href={`https://news.ycombinator.com/item?id=${article.objectID}`}>{`${article.num_comments} comments`}</a>
+            </span>
+            <br></br>
         </li>
         ))}
       </ul>
