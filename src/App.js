@@ -1,13 +1,13 @@
-import logo from './logo.svg';
+
 import './App.css';
-import { format, formatDistance, formatRelative, subDays } from 'date-fns'
+import { formatDistance, } from 'date-fns'
 import React, { useEffect, useState } from "react";
 
 function App() {
   const [articles, setArticles] = useState([]);
 
   async function getArticles(props) {
-    const response = await fetch("http://hn.algolia.com/api/v1/search?tags=front_page");
+    const response = await fetch(`http://hn.algolia.com/api/v1/search?tags=${props}`);
     const data = await response.json();
     setArticles(data.hits);
   }
@@ -33,21 +33,34 @@ function App() {
   return (
 
     <div className="App">
-      <body>
+      <div>
       <h1>
         <a href="https://news.ycombinator.com/"className="favicon">H</a>
         Search<br></br>
         Hacker News</h1>
+        <button onClick={getArticles("")}>Hello</button>
         <form>
         <div>Search</div>
-        <button>
-        </button>
+    <select>
+      <option value='blue'>Stories</option>
+      <option value='green'>All</option>
+      <option value='red'>Comments</option>
+    </select>
         <div>by</div>
-        <button>
-        </button>
+        <select>
+      <option value='blue'>Popularity</option>
+      <option value='green'>Date</option>
+    </select>
         <div>for</div>
-        <button>
-        </button>
+      <select>
+      <option value='blue'>All time</option>
+      <option value='green'>Last 24h</option>
+      <option value='red'>Past Week</option>
+      <option value='yellow'>Past Month</option>
+      <option value='yellow'>Past Year</option>
+      <option value='yellow'>Custom range</option>
+
+    </select>
         </form>
       <ul>
        {articles.map((article, index)=>(
@@ -61,7 +74,7 @@ function App() {
         </li>
         ))}
       </ul>
-      </body>
+      </div>
     </div>
   );
 }
