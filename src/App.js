@@ -8,9 +8,9 @@ function App() {
 
   async function getArticles(tag,query,bydate,page,hits) {
     // console.log(`http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}&hitsPerPage=${hits}&page=${page}`)
-    const response = await fetch(`http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}&hitsPerPage=${hits}&page=${page}`);
+    const response = await fetch(`http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}&hitsPerPage=${hits}&page=${page}`);//need to add date range
     const data = await response.json();
-    setArticles(data.hits);
+    setArticles(data.hits);//move to new file for calling including uses effect
   }
 
   useEffect(() => {
@@ -81,7 +81,7 @@ function App() {
             <a href={article.url} className="url">{getUrl(article)}</a> {/*add href fot article link on hackernews */}
             <span className='bottom'>
             <br></br>
-            <a href={`https://news.ycombinator.com/item?id=${article.objectID}`}>{article.points}</a>
+            <a href={`https://news.ycombinator.com/item?id=${article.objectID}`}>{article.points}</a> {/*add two classes in new folder */}
             <div>|</div>
             <div>{article.author}</div>
             <div>|</div>
