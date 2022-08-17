@@ -3,12 +3,15 @@ import './App.css';
 import { formatDistance, } from 'date-fns'
 import React, { useEffect, useState } from "react";
 
+
 function App() {
   const [articles, setArticles] = useState([]);
+
 
   async function getArticles(tag,query,bydate,page,hits) {
     // console.log(`http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}&hitsPerPage=${hits}&page=${page}`)
     const response = await fetch(`http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}&hitsPerPage=${hits}&page=${page}`);//need to add date range
+
     const data = await response.json();
     setArticles(data.hits);//move to new file for calling including uses effect
   }
@@ -23,11 +26,11 @@ function App() {
     console.log(articles);
   }, [articles]);
 
-  function getDate(timestamp){
+  function getDate(timestamp) {
     var date = new Date(timestamp * 1000);
-    var formattedDate= formatDistance(date, new Date(), { addSuffix: true })
-  //  return date.toLocaleDateString("en-US")
-  return formattedDate;
+    var formattedDate = formatDistance(date, new Date(), { addSuffix: true });
+    //  return date.toLocaleDateString("en-US")
+    return formattedDate;
   }
   function getUrl(props){
     // console.log(props.url==null)
@@ -36,8 +39,37 @@ function App() {
 
   }
 
-
   return (
+    <body>
+      <section>
+        <div>
+          <article>
+            <h1>
+              <a href="https://news.ycombinator.com/" className="favicon">
+                H
+              </a>
+              Search<br></br>
+              Hacker News
+            </h1>
+          </article>
+
+          <form>
+            <div>Search</div>
+            <button></button>
+            <div>by</div>
+            <button></button>
+            <div>for</div>
+            <button></button>
+          </form>
+          <article>
+            <div>
+              <ul>
+                {articles.map((article, index) => (
+                  <li className="posts" key={article.objectID}>
+                    <h2>
+                      <a href={article.url}>{article.title}</a>
+                      <span>({article.url})</span>
+                    </h2>
 
     <div className="App">
       <div>
@@ -95,6 +127,7 @@ function App() {
       </ul>
       </div>
     </div>
+
   );
 }
 

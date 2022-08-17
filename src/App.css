@@ -1,60 +1,89 @@
-.App {
-  display:center;
-  background-color: #f6f6ef ;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+body {
+padding-left: 40px;
+padding-right: 40px;
+}
+section {
+ background-color: rgb(246, 246, 240);
+}
+
+.favicon {
+  color: white;
+  margin: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-bottom: 15px;
+  font-size: 35px;
+  border: 1px solid white;
+}
+h1{
+  display:flex;
+  flex-direction: row;
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 100;
+  background-color: #ff742b;
+  margin-top: 10px;
+  padding-top: 10px;
+  padding-left:3px;
+}
+
+h2, span {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+h2 {
+  font-size: 15px;
+  font-weight: 600;
   
 }
-.favicon{
-  display:flex;
-  justify-content: center;
-  justify-items: center;
-  align-self: center;
-  color:white;
-  font-weight: bolder;
-  text-decoration: none; 
-  border: 1px solid white;
-  width:20px;
-  height:20px;
-  padding:3px;
-  margin-right:5px;
-  /* padding-top: 0px; */
+span {
+  font-size: 14px;
+  font-weight: 200;
 }
-.bottom{
+p {
+  font-size: 14px;
+  margin-top: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.verticalLine {
+  border-left: 2px solid grey;
+  height: 13px;
+}
+p, .verticalLine {
+  display: flex;
+  gap: 8px;
+}
+
+form {
   display:flex;
   flex-direction: row;
 }
 .posts,.url{
   text-decoration: none;
   color:#262625 ;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+
   list-style: none;
 }
-span a,div{
+a {
   text-decoration: none;
   color:#262625 ;
   font-size:10.6667px;
 }
-h1{
-  display:flex;
-  flex-direction: row;
-  font-size: 18px;
-  background-color: #ff742b;
-  margin-top: 0;
-  padding-left:3px;
+
+ul {
+  list-style-type: none;
+  padding: 20px;
 }
-h2 a{
-  list-style: none;
-  color:#262625 ;
-  text-decoration: none;
-  font-size: 14px;
+
+@media (min-width: 1024px) {
+  input {
+    width: 100%;
+  }
+  section {
+   margin: auto;
+
+  }
 }
-h3{
-  font-size:10.6667px;
-}
-h4{
-  font-size:10.6667px;
-}
-h5{
-  font-size:10.6667px;
-}
+
