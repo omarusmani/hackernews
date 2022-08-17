@@ -60,14 +60,18 @@ form {
   display:flex;
   flex-direction: row;
 }
-.posts{
+.posts,.url{
+  text-decoration: none;
   color:#262625 ;
+
   list-style: none;
 }
 a {
   text-decoration: none;
   color:#262625 ;
+  font-size:10.6667px;
 }
+
 ul {
   list-style-type: none;
   padding: 20px;
