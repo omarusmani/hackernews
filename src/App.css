@@ -1,9 +1,9 @@
 body {
-padding-left: 40px;
-padding-right: 40px;
+  padding-left: 40px;
+  padding-right: 40px;
 }
 section {
- background-color: rgb(246, 246, 240);
+  background-color: rgb(246, 246, 240);
 }
 
 .favicon {
@@ -15,8 +15,8 @@ section {
   font-size: 35px;
   border: 1px solid white;
 }
-h1{
-  display:flex;
+h1 {
+  display: flex;
   flex-direction: row;
   font-size: 20px;
   font-family: Arial, Helvetica, sans-serif;
@@ -24,52 +24,63 @@ h1{
   background-color: #ff742b;
   margin-top: 10px;
   padding-top: 10px;
-  padding-left:3px;
+  padding-left: 3px;
 }
 
-h2, span {
+.search {
+  width: 70%;
+  height: 45px;
+  margin-left: 35px;
+  margin-top: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 100;
+  padding-left: 15px;
+}
+.search::placeholder {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 100;
+  padding-left: 15px;
+}
+
+h2,
+span {
   display: flex;
   gap: 5px;
   margin-bottom: 5px;
   font-family: Arial, Helvetica, sans-serif;
 }
 h2 {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
-  
 }
 span {
   font-size: 14px;
   font-weight: 200;
 }
 p {
+  display: flex;
+  gap: 8px;
   font-size: 14px;
   margin-top: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
-.verticalLine {
-  border-left: 2px solid grey;
-  height: 13px;
-}
-p, .verticalLine {
-  display: flex;
-  gap: 8px;
-}
 
 form {
-  display:flex;
+  display: flex;
   flex-direction: row;
 }
-.posts,.url{
+.posts,
+.url {
   text-decoration: none;
-  color:#262625 ;
-
+  color: #262625;
   list-style: none;
 }
+
 a {
   text-decoration: none;
-  color:#262625 ;
-  font-size:10.6667px;
+  color: #262625;
 }
 
 ul {
@@ -82,8 +93,6 @@ ul {
     width: 100%;
   }
   section {
-   margin: auto;
-
+    margin: auto;
   }
 }
-
