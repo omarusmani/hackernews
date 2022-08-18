@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 
 function App() {
   const [articles, setArticles] = useState([]);
+  const [query, setQuery] = useState("");
 
   async function getArticles(tag, query, bydate, page, hits) {
     // console.log(`http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}&hitsPerPage=${hits}&page=${page}`)
@@ -25,6 +26,14 @@ function App() {
     console.log(articles);
   }, [articles]);
 
+  function handleQuery(event) {
+    setQuery(event.target.value);
+  }
+
+  function handleSubmit() {
+    getArticles("", query, "", "", "");
+  }
+
   function getDate(timestamp) {
     var date = new Date(timestamp * 1000);
     var formattedDate = formatDistance(date, new Date(), { addSuffix: true });
@@ -38,7 +47,7 @@ function App() {
       ? `https://news.ycombinator.com/item?id=${props.objectID}`
       : props.url;
   }
-
+  console.log("query", query);
   return (
     <body>
       <section>
@@ -51,11 +60,14 @@ function App() {
               Search<br></br>
               Hacker News
               <input
+                value={query}
+                onChange={handleQuery}
                 className="search"
                 type="text"
                 placeholder="Search stories by title, url, or author"
                 name="search"
-              ></input>
+              />
+              <button onClick={handleSubmit}>Submit</button>
             </h1>
 
             <button onClick={() => getArticles("", "", "", "", "")}>
@@ -116,8 +128,8 @@ function App() {
                   </h2>
 
                   {/*add href fot article link on hackernews */}
-                  
-                    <p>
+
+                  <p>
                     <a
                       href={`https://news.ycombinator.com/item?id=${article.objectID}`}
                     >
@@ -137,7 +149,6 @@ function App() {
                       href={`https://news.ycombinator.com/item?id=${article.objectID}`}
                     >{`${article.num_comments} comments`}</a>
                   </p>
-                  
                 </li>
               ))}
             </ul>
