@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 function App() {
   const [articles, setArticles] = useState([]);
   const [query, setQuery] = useState("");
+  
 
   async function getArticles(tag, query, bydate, page, hits) {
     // console.log(`http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}&hitsPerPage=${hits}&page=${page}`)
@@ -67,7 +68,7 @@ function App() {
                 placeholder="Search stories by title, url, or author"
                 name="search"
               />
-              <button onClick={handleSubmit}>Submit</button>
+              <button className="search-btn" onClick={handleSubmit}>Submit</button>
             </h1>
 
             <button onClick={() => getArticles("", "", "", "", "")}>
