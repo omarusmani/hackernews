@@ -2,19 +2,21 @@ import "./App.css";
 import "./components/dropdown.css"
 import { formatDistance } from "date-fns";
 import React, { useEffect, useState } from "react";
+import { Dropdown } from "./components/dropdown";
 
 
 function App() {
   const [articles, setArticles] = useState([]);
   const [query, setQuery] = useState("");
 
-  async function getArticles(tag, query, bydate, page, hits) {
-    // console.log(`http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}&hitsPerPage=${hits}&page=${page}`)
+  async function getArticles(tag, query, bydate, page, hits, date) {
+    console.log(`http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}&hitsPerPage=${hits}&page=${page}&numericFilters=created_at_i${date}`)
     const response = await fetch(
-      `http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}&hitsPerPage=${hits}&page=${page}`
-    ); //need to add date range
-
+      `http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}&hitsPerPage=${hits}&page=${page}&numericFilters=created_at_i${date}}`
+    ); //need to add date ranges
+    // console.log(response)
     const data = await response.json();
+    console.log(data)
     setArticles(data.hits); //move to new file for calling including uses effect
   }
   async function getArticlesbyDate(timestamp) {
@@ -31,7 +33,7 @@ function App() {
 
   useEffect(() => {
     console.log("Mounted");
-    getArticles("", "", "", "", ""); //fixed error where no queries where causing issues with api rejection//this also brings the initial page
+    getArticles("", "", "", "", "",">1"); //fixed error where no queries where causing issues with api rejection//this also brings the initial page
   }, []);
 
   useEffect(() => {
@@ -101,35 +103,26 @@ function App() {
               <button onClick={handleSubmit}>Submit</button>
             </h1>
 
-            {/* <button onClick={() => getArticles("", "", "", "", "")}>
-              Hello
-            </button>
-            <button onClick={() => getArticles("comment", "", "", "", "")}>
-              Hello
-            </button>
-            <button onClick={() => getArticles("ask_hn", "", "", "", "")}>
-              Hello
-            </button>
-            <button onClick={() => getArticles("front_page", "", "", "", "")}>
-              Hello
-            </button>
-            <button onClick={() => getArticlesbyDate(24)}>
-              24 Hours Ago
-            </button> */}
 
+
+     
             <form>
               <div>Search</div>
-              <select>
-                <option value="blue">Stories</option>
-                <option value="green">All</option>
-                <option value="red">Comments</option>
-              </select>
+              <div class="dropdown">
+             <button onSubmit="return false" class="dropbtn">Dropdown</button>
+             <div class="dropdown-content">
+             <div  onClick={(e) => getArticles("ask_hn", "", "", "", "","<1")}>Stories</div>
+             <div  onClick={(e) => getArticles("ask_hn", "", "", "", "","")}>Comments</div>
+             <div  onClick={(e) => getArticles("ask_hn", "", "", "", "","")}>All</div>
+             </div>
+             </div>
               <div>by</div>
               <select>
                 <option value="blue">Popularity</option>
                 <option value="green">Date</option>
               </select>
               <div>for</div>
+
             <div class="dropdown">
             <div className="dropbtn">All time
             <div className="dropdown-content">
@@ -141,6 +134,7 @@ function App() {
             </div>
             </div>
             </div>
+
             </form>
 
             <ul>
