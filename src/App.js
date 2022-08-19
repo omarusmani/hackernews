@@ -10,9 +10,9 @@ function App() {
   const [query, setQuery] = useState("");
 
   async function getArticles(tag, query, bydate, page, hits) {
-    console.log(`http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}&hitsPerPage=${hits}&page=${page}`)
+    console.log(`http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}`)
     const response = await fetch(
-      `http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}&hitsPerPage=${hits}&page=${page}}`
+      `http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}}`
     ); //need to add date ranges
     // console.log(response)
     const data = await response.json();
@@ -100,7 +100,7 @@ function App() {
                 placeholder="Search stories by title, url, or author"
                 name="search"
               />
-        <button className="search-btn" onClick={handleSubmit}>Submit</button>            </h1>
+        <button className="search-btn" onClick={handleSubmit}>Submit</button> </h1>
 
             <form>
               <select>
@@ -114,7 +114,6 @@ function App() {
                 <option value="green">Date</option>
               </select>
               <div>for</div>
-
             <div className="dropdown">
             <div className="dropbtn">All time
             <div className="dropdown-content">
@@ -126,7 +125,8 @@ function App() {
             </div>
             </div>
             </div>
-            </form>
+              </form>
+            
 
             <ul>
               {articles.map((article, index) => (
