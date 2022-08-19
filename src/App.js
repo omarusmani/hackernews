@@ -10,27 +10,14 @@ function App() {
   const [query, setQuery] = useState("");
 
   async function getArticles(tag, query, bydate, page, hits) {
-    console.log(`http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}`)
+    console.log(`https://hn.algolia.com/api/v1/search?query=${query}`);
     const response = await fetch(
-      `http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}}`
-    ); //need to add date ranges
+      `https://hn.algolia.com/api/v1/search?query=${query}`); //need to add date ranges
     // console.log(response)
     const data = await response.json();
     console.log(data)
     setArticles(data.hits); //move to new file for calling including uses effect
   }
-  async function getArticlesbyDate(timestamp) {
-      const time=getTimeStamp(timestamp)
-      console.log(time)
-    // console.log(`http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}&hitsPerPage=${hits}&page=${page}`)
-    const response = await fetch(
-      `http://hn.algolia.com/api/v1/search?tags=story&numericFilters=created_at_i>${time}`
-    ); //need to add date range
-
-    const data = await response.json();
-    setArticles(data.hits); //move to new file for calling including uses effect
-  }
-
   useEffect(() => {
     console.log("Mounted");
     getArticles("", "", "", "", ""); //fixed error where no queries where causing issues with api rejection//this also brings the initial page
@@ -40,6 +27,19 @@ function App() {
     console.log("Updated!");
     console.log(articles);
   }, [articles]);
+
+  async function getArticlesbyDate(timestamp) {
+      const time=getTimeStamp(timestamp)
+      console.log(time)
+    // console.log(`http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}&hitsPerPage=${hits}&page=${page}`)
+    const response = await fetch(
+      `https://hn.algolia.com/api/v1/search?tags=story&numericFilters=created_at_i>${time}`
+    ); //need to add date range
+
+    const data = await response.json();
+    setArticles(data.hits); //move to new file for calling including uses effect
+  }
+
 
   function handleQuery(event) {
     setQuery(event.target.value);
@@ -101,7 +101,6 @@ function App() {
                 name="search"
               />
         <button className="search-btn" onClick={handleSubmit}>Submit</button> </h1>
-
             <form>
               <select>
              <option>Stories</option>
@@ -127,7 +126,6 @@ function App() {
             </div>
               </form>
             
-
             <ul>
               {articles.map((article, index) => (
                 <li className="posts" key={article.objectID}>
