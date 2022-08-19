@@ -1,7 +1,9 @@
 import "./App.css";
+import "./components/dropdown.css"
 import { formatDistance } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "./components/dropdown";
+
 
 function App() {
   const [articles, setArticles] = useState([]);
@@ -15,6 +17,17 @@ function App() {
     // console.log(response)
     const data = await response.json();
     console.log(data)
+    setArticles(data.hits); //move to new file for calling including uses effect
+  }
+  async function getArticlesbyDate(timestamp) {
+      const time=getTimeStamp(timestamp)
+      console.log(time)
+    // console.log(`http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}&hitsPerPage=${hits}&page=${page}`)
+    const response = await fetch(
+      `http://hn.algolia.com/api/v1/search?tags=story&numericFilters=created_at_i>${time}`
+    ); //need to add date range
+
+    const data = await response.json();
     setArticles(data.hits); //move to new file for calling including uses effect
   }
 
@@ -41,6 +54,24 @@ function App() {
     var formattedDate = formatDistance(date, new Date(), { addSuffix: true });
     //  return date.toLocaleDateString("en-US")
     return formattedDate;
+  }
+  function getTimeStamp(timestamp){
+    if(timestamp===24){
+      return Math.floor(Date.now() / 1000)-86400;
+    }
+    if(timestamp===7){
+      return Math.floor(Date.now() / 1000)-604800;
+    }
+    if(timestamp===1){
+      return 1;
+    }
+    if(timestamp===30){
+      return Math.floor(Date.now() / 1000)-2629743;
+    }
+    if(timestamp===12){
+      return Math.floor(Date.now() / 1000)-31556926;
+    }
+
   }
   function getUrl(props) {
     // console.log(props.url==null)
@@ -72,18 +103,7 @@ function App() {
               <button onClick={handleSubmit}>Submit</button>
             </h1>
 
-            <button onClick={() => getArticles("", "", "", "", "","")}>
-              Hello
-            </button>
-            <button onClick={() => getArticles("comment", "", "_by_date", "", "",`<1660764000`)}>
-              Hello
-            </button>
-            <button onClick={() => getArticles("ask_hn", "", "", "", "","")}>
-              Hello
-            </button>
-            <button onClick={() => getArticles("front_page", "", "", "", "","")}>
-              Hello
-            </button>
+
 
      
             <form>
@@ -102,19 +122,19 @@ function App() {
                 <option value="green">Date</option>
               </select>
               <div>for</div>
-              <select>
-                <option
-                  onClick={() => getArticles("", "yellow", "", "", "","<1660764000")}
-                  value="blue"
-                >
-                  All time
-                </option>
-                <option value="green">Last 24h</option>
-                <option value="red">Past Week</option>
-                <option value="yellow">Past Month</option>
-                <option value="yellow">Past Year</option>
-                <option value="yellow">Custom range</option>
-              </select>
+
+            <div class="dropdown">
+            <div className="dropbtn">All time
+            <div className="dropdown-content">
+            <div onClick={(e) => getArticlesbyDate(1)}>All time</div>
+            <div onClick={(e) => getArticlesbyDate(24)}>24 hours</div>
+            <div onClick={(e) => getArticlesbyDate(7)}>One Week</div>
+            <div onClick={(e) => getArticlesbyDate(30)}>Past Month</div>
+            <div onClick={(e) => getArticlesbyDate(12)}>Past Year</div>
+            </div>
+            </div>
+            </div>
+
             </form>
 
             <ul>
