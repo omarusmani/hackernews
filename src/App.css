@@ -87,6 +87,13 @@ ul {
   list-style-type: none;
   padding: 20px;
 }
+.search-btn {
+  height: 51px;
+  margin-top: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ff742b;
+  color: aliceblue;
+}
 
 @media (min-width: 1024px) {
   input {

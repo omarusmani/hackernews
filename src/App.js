@@ -9,10 +9,10 @@ function App() {
   const [articles, setArticles] = useState([]);
   const [query, setQuery] = useState("");
 
-  async function getArticles(tag, query, bydate, page, hits, date) {
-    console.log(`http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}&hitsPerPage=${hits}&page=${page}&numericFilters=created_at_i${date}`)
+  async function getArticles(tag, query, bydate, page, hits) {
+    console.log(`http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}&hitsPerPage=${hits}&page=${page}`)
     const response = await fetch(
-      `http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}&hitsPerPage=${hits}&page=${page}&numericFilters=created_at_i${date}}`
+      `http://hn.algolia.com/api/v1/search${bydate}?query=${query}&tags=${tag}&hitsPerPage=${hits}&page=${page}}`
     ); //need to add date ranges
     // console.log(response)
     const data = await response.json();
@@ -33,7 +33,7 @@ function App() {
 
   useEffect(() => {
     console.log("Mounted");
-    getArticles("", "", "", "", "",">1"); //fixed error where no queries where causing issues with api rejection//this also brings the initial page
+    getArticles("", "", "", "", ""); //fixed error where no queries where causing issues with api rejection//this also brings the initial page
   }, []);
 
   useEffect(() => {
@@ -100,22 +100,14 @@ function App() {
                 placeholder="Search stories by title, url, or author"
                 name="search"
               />
-              <button onClick={handleSubmit}>Submit</button>
-            </h1>
+        <button className="search-btn" onClick={handleSubmit}>Submit</button>            </h1>
 
-
-
-     
             <form>
-              <div>Search</div>
-              <div class="dropdown">
-             <button onSubmit="return false" class="dropbtn">Dropdown</button>
-             <div class="dropdown-content">
-             <div  onClick={(e) => getArticles("ask_hn", "", "", "", "","<1")}>Stories</div>
-             <div  onClick={(e) => getArticles("ask_hn", "", "", "", "","")}>Comments</div>
-             <div  onClick={(e) => getArticles("ask_hn", "", "", "", "","")}>All</div>
-             </div>
-             </div>
+              <select>
+             <option>Stories</option>
+             <option>Comments</option>
+             <option >All</option>
+             </select>
               <div>by</div>
               <select>
                 <option value="blue">Popularity</option>
@@ -123,7 +115,7 @@ function App() {
               </select>
               <div>for</div>
 
-            <div class="dropdown">
+            <div className="dropdown">
             <div className="dropbtn">All time
             <div className="dropdown-content">
             <div onClick={(e) => getArticlesbyDate(1)}>All time</div>
@@ -134,7 +126,6 @@ function App() {
             </div>
             </div>
             </div>
-
             </form>
 
             <ul>
